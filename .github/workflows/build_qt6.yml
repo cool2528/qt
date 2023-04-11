@@ -21,8 +21,7 @@ jobs:
         rm strawberry.zip
         perl --version
     - name: Install Python 3.10 version
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
+      uses: actions/setup-python@v4
       with:
         python-version: '3.10'
         architecture: 'x64'
