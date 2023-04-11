@@ -20,13 +20,14 @@ jobs:
         7z.exe x strawberry.zip -o"C:/Strawberry"
         rm strawberry.zip
         perl --version
-    - name: Install Python 3.7 version
-      uses: actions/setup-python@v1
+    - name: Install Python 3.10 version
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
-        python-version: '3.7'
+        python-version: '3.10'
         architecture: 'x64'
     - name: Setup cmake
-      uses: jwlawson/actions-setup-cmake@v1.12
+      uses: jwlawson/actions-setup-cmake@v1.13
     - name: Compile Qt
       run: |
         # Clone Qt6 repo
@@ -48,7 +49,7 @@ jobs:
         ..\qt\configure.bat -prefix "${WORD_DIR}\qt${{ matrix.qt_version }}_binaries_${{ matrix.arch }}" -opengl desktop -platform win32-msvc -release -force-debug-info -opensource -confirm-license -qt-zlib -qt-libpng -qt-libjpeg -qt-tiff -qt-webp -no-feature-cpp-winrt -no-feature-sqlmodel -feature-accessibility -feature-optimize_full -no-pch -no-icu -no-dbus -no-sql-sqlite -no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc -no-sql-psql -nomake tools -nomake tests -nomake examples -no-qml-debug -skip qtconnectivity,qt3d,qtpositioning,qtlocation,qtactiveqt,qtcharts,qtcoap,qtlottie,qtnetworkauth,qtsensors,qtserialbus,qtserialport,qtvirtualkeyboard,qtdatavis3d,qtcanvas3d,qtgamepad,qtquickcontrols,qtquickcontrols2,qtremoteobjects,qttranslations,qtvirtualkeyboard,qtwebchannel,qtwebsockets,qtwebview,qtwebengine,qtquick3d,qtquicktimeline,qtdeclarative,qtdoc,qtmqtt,qtopcua,qtscxml,qtmultimedia
         cmake --build . --parallel
         cmake --install .
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: qt${{ matrix.qt_version }}_binaries_${{ matrix.arch }}_windows.zip
         path: qt${{ matrix.qt_version }}_binaries_${{ matrix.arch }}
